@@ -1,13 +1,13 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import Layout from "./components/layout.jsx"
-import './components/layout.css'
-import App from './App.jsx'
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+import Layout from "./components/layout.jsx";
+import "./components/layout.css";
+import App from "./App.jsx";
 
-createRoot(document.getElementById('root')).render(
+createRoot(document.getElementById("root")).render(
   <StrictMode>
     <Layout>
       <App />
     </Layout>
   </StrictMode>,
-)
+);

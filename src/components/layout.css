@@ -23,13 +23,13 @@ a:hover {
   color: #535bf2;
 }
 
-body {
+/* body {
   margin: 0;
   display: flex;
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
-}
+} */
 
 h1 {
   font-size: 3.2em;
@@ -75,45 +75,99 @@ html {
 }
 
 /* STUFF I ADDED MYSELF */
+* {
+  box-sizing: border-box;
+}
 .game {
   margin: 0 auto;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 h1 {
   font-size: 3rem;
 }
 
-input, .guess {
-  height: 2rem;
-  width: 12rem;
-  border-radius: 12px;
-  text-align: center;
-  font-size: 2rem;
-  margin: 2px;
-}
-
 /*TODO: MAKE THESE RESPONSIVE*/
 .guesses-container {
   display: flex;
-  flex-direction: column;
-  gap: 2rem;
+  flex-direction: column-reverse;
+  /* gap: 2rem; */
   justify-content: center;
 }
 
 .guess {
   display: flex;
+  width: 220px;
+  justify-content: center;
+  margin-top: 0px;
+  gap: 5px;
+  animation: slide 0.2s ease-in-out;
+}
+
+@keyframes slide {
+  0% {
+    transform: translateY(-1rem);
+    opacity: 0%;
+  }
+  100% {
+    transform: translateY(-0rem);
+  }
+}
+
+@keyframes flip {
+  0% {
+    transform: scaleY(1);
+    background-color: black;
+  }
+  50% {
+    transform: scaleY(0);
+    background-color: transparent;
+    color: transparent;
+  }
+  100% {
+    transform: scaleY(1);
+  }
+}
+
+.flip {
+  animation: flip 300ms ease forwards;
+}
+
+/* Input container to align letters */
+.guess-input-container {
+  display: flex;
   justify-content: center;
   gap: 5px;
-  font-size: 2rem;
+}
+
+/* Input styling similar to letter components */
+.letter,
+.input-box {
+  width: 40px;
+  height: 40px;
+  border: 1px solid #ccc;
+  font-size: 1.5rem; /* Match font sizes */
+  overflow: hidden;
+  text-transform: uppercase;
+  color: white; /* Ensure uniform text color */
+  box-shadow: none; /* Remove shadows */
+  padding: 0;
+  margin: 0;
+  margin-bottom: 5px;
 }
 
 .letter {
-  width: 40px;
-  height: 40px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: 1px solid #ccc;
-  text-transform: uppercase;
+  z-index: 1;
+  background-color: black;
+}
+
+/* Hidden input field for typing */
+.hidden-input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
 }
