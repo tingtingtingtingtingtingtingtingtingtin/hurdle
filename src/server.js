@@ -1,11 +1,6 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import express from 'express';
+import cors from 'cors';
 
-const express = require('express');
-const cors = require('cors');
 const app = express();
 app.use(express.json());
 app.use(cors());
@@ -35,12 +30,3 @@ app.get('/', (req, res) => {
 app.listen(3000, () => {
   console.log('Server is running on port 3000');
 });
-
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-);
-
-reportWebVitals();
