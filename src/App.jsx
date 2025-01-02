@@ -1,11 +1,16 @@
 import { useState, useEffect } from "react";
 import Input from "./components/Input";
 import List from "./components/List";
+import Alert from "./components/Alert";
 
 function App() {
   const [guesses, setGuesses] = useState([]);
   const [currentGuess, setCurrentGuess] = useState("");
   const [gameState, setGameState] = useState("wait");
+  const [alertMessage, setAlertMessage] = useState("");
+
+  const showAlert = (message) => setAlertMessage(message);
+  const hideAlert = () => setAlertMessage("");
 
   useEffect(() => {
     const handleStart = (e) => {
@@ -31,10 +36,10 @@ function App() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (currentGuess.length < 5) {
-      alert("Guesses must be 5 characters long!");
+      showAlert("Guesses must be 5 characters long!");
       return;
     } else if (guesses.some((data) => data.guess === currentGuess)) {
-      alert("Word already guessed!");
+      showAlert("Word already guessed!");
       return;
     }
 
@@ -59,6 +64,7 @@ function App() {
 
       setGuesses([...guesses, { guess: currentGuess, result: feedback }]);
       if (all_green) {
+        showAlert("You hit the hurdle!");
         setTimeout(() => setGameState("guessed"), 100);
       } else {
         setCurrentGuess("");
@@ -92,6 +98,7 @@ function App() {
       ) : (
         <List guesses={guesses} />
       )}
+      <Alert message={alertMessage} onClose={hideAlert} />
     </div>
   );
 }

@@ -35,7 +35,7 @@ const Input = ({
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [setCurrentGuess, handleSubmit]);
+  }, [setCurrentGuess, handleSubmit, gameState, setGameState]);
 
   return (
     <form onSubmit={handleSubmit} className="guess-input-container">
