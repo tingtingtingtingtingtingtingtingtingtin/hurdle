@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/api/wordle",
+      "destination": "https://wordle-api.vercel.app/api/wordle"
+    }
+  ]
+}
