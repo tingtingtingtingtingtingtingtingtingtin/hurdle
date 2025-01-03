@@ -6,6 +6,7 @@ const Input = ({
   handleSubmit,
   gameState,
   setGameState,
+  inputInvalid,
 }) => {
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -35,7 +36,7 @@ const Input = ({
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [setCurrentGuess, handleSubmit, gameState, setGameState]);
+  }, [setCurrentGuess, handleSubmit, gameState, setGameState, inputInvalid]);
 
   return (
     <form onSubmit={handleSubmit} className="guess-input-container">
@@ -43,7 +44,13 @@ const Input = ({
         <div
           key={index}
           className="letter input-box"
-          style={{ color: `${gameState === "guessed" ? "#538d4e" : ""}` }}
+          style={{
+            color: `${gameState === "guessed" ? "#538d4e" : ""} ${
+              inputInvalid ? "#721c24" : ""
+            }`,
+            borderColor: `${gameState === "guessed" ? "#538d4e" : ""} ${inputInvalid ? "#721c24" : ""}`, // Default border if valid
+            transition: "all 0.3s ease", // Smooth transition for the border color
+          }}
         >
           {currentGuess[index] || ""}
         </div>
