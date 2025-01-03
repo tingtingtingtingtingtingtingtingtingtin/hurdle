@@ -58,7 +58,7 @@ function App() {
     }
 
     try {
-      const response = await fetch("http://localhost:3000/api/wordle", {
+      const response = await fetch('https://wordle-api.vercel.app/api/wordle', {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ guess: currentGuess }),
@@ -77,7 +77,6 @@ function App() {
           });
 
       if (all_green) {
-        showAlert("You hit the hurdle!");
         setTimeout(() => setGameState("guessed"), 100);
       } else if (
         !wordBank.has(currentGuess.toLowerCase()) &&

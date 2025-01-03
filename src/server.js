@@ -1,7 +1,9 @@
 import express from "express";
 import cors from "cors";
+import ViteExpress from 'vite-express';
 
 const app = express();
+ViteExpress.config({mode: "production"});
 app.use(express.json());
 app.use(cors());
 
@@ -26,7 +28,11 @@ app.get("/", (req, res) => {
   res.send("CORS is enabled for all origins!");
 });
 
+const PORT = process.env.port || 3000;
+const HOST = "0.0.0.0"
 // Start server
-app.listen(3000, () => {
-  console.log("Server is running on port 3000");
+const server = app.listen(PORT, HOST, () => {
+  console.log(`Server is running on https://${HOST}:${PORT}`);
 });
+
+ViteExpress.bind(app, server);
