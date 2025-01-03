@@ -1,16 +1,29 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext, createContext } from "react";
+import Header from "./components/Header";
 import Input from "./components/Input";
 import List from "./components/List";
 import Alert from "./components/Alert";
 import wordBank from "./data/wordbank";
+import expandedWordBank from "./data/expanded";
+
+export const SettingContext = createContext(null);
 
 function App() {
   const [guesses, setGuesses] = useState([]);
   const [currentGuess, setCurrentGuess] = useState("");
   const [gameState, setGameState] = useState("wait");
   const [alertMessage, setAlertMessage] = useState("");
+  const [inputInvalid, setInputInvalid] = useState(false);
+  const [settings, setSettings] = useState({ useExpanded: true, hardMode: false });
 
-  const showAlert = (message) => setAlertMessage(message);
+  const showAlert = (message) => {
+    setAlertMessage(message);
+    setInputInvalid(true);
+
+    setTimeout(() => {
+      setInputInvalid(false);
+    }, 500);
+  };
   const hideAlert = () => setAlertMessage("");
 
   useEffect(() => {
@@ -66,24 +79,28 @@ function App() {
       if (all_green) {
         showAlert("You hit the hurdle!");
         setTimeout(() => setGameState("guessed"), 100);
-        setGuesses([...guesses, { guess: currentGuess, result: feedback }]);
-        return;
-      }
-      if (!wordBank.has(currentGuess.toLowerCase())) {
-        // console.log(currentGuess);
+      } else if (
+        !wordBank.has(currentGuess.toLowerCase()) &&
+        (!settings.useExpanded ||
+          !expandedWordBank.has(currentGuess.toLowerCase()))
+      ) {
         showAlert("Not a valid word!");
+        return;
       } else {
-        setGuesses([...guesses, { guess: currentGuess, result: feedback }]);
-        setCurrentGuess('');
+        setCurrentGuess("");
       }
-    } catch {
-      throw new Error("Guess API error");
+      setGuesses([...guesses, { guess: currentGuess, result: feedback }]);
+    } catch (error) {
+      console.error("Error:", error);
+      showAlert("Guess API error");
     }
   };
 
   return (
     <div className="game">
-      <h1>HURDLE</h1>
+      <SettingContext.Provider value={{ settings, setSettings }}>
+        <Header />
+      </SettingContext.Provider>
       {gameState !== "wait" ? (
         <h3>
           {gameState === "guessed" ? `You hit the hurdle! Your` : `Current`}{" "}
@@ -98,6 +115,7 @@ function App() {
         handleSubmit={handleSubmit}
         gameState={gameState}
         setGameState={setGameState}
+        inputInvalid={inputInvalid}
       />
       {gameState === "pause" ? (
         <h3>Paused. Please start typing to continue.</h3>

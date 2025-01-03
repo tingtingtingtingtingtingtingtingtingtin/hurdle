@@ -1,6 +1,6 @@
 /* VITE DEFAULTS */
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: "Clear Sans", "Helvetica Neue", Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
@@ -79,8 +79,24 @@ html {
   align-items: center;
 }
 
-h1 {
-  font-size: 3rem;
+.header {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-column-gap: 5px;
+  justify-items: center;
+}
+
+.header-element:nth-child(1) {
+  grid-column-start: 2;
+}
+
+.settings-btn {
+  margin: 2rem;
+  height: 3rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
 }
 
 /* Alert Box Styles */
@@ -188,4 +204,122 @@ h1 {
   position: absolute;
   opacity: 0;
   pointer-events: none;
+}
+
+.settings-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.settings-content {
+  padding: 20px;
+  border-radius: 8px;
+  width: 50%;
+  text-align: center;
+  background-color: rgb(6, 6, 6);
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+.settings-item {
+  margin-left: 2rem;
+  margin-bottom: 0.5rem;
+  text-align: left;
+  display: flex;
+  justify-content: space-between;
+}
+
+.settings-close {
+  position: relative;
+  top: 0;
+  background: none;
+  border: none;
+  height: 40px;
+  width: 40px;
+  margin-top: 1rem;
+  padding: 0;
+}
+
+.label-text {
+  margin-top: 1rem;
+}
+/* CSS taken from elsewhere */
+.container {
+  text-align: center;
+  display: flex;
+  justify-content: space-around;
+  gap: 2rem;
+}
+.toggle-switch {
+  position: relative;
+  width: 75px;
+  display: inline-block;
+  text-align: left;
+  top: 8px;
+}
+.checkbox {
+  display: none;
+}
+.label {
+  display: block;
+  overflow: hidden;
+  cursor: pointer;
+  border: 0 solid #bbb;
+  border-radius: 20px;
+}
+.inner {
+  display: block;
+  width: 200%;
+  margin-left: -100%;
+  transition: margin 0.2s 0s;
+}
+.inner:before,
+.inner:after {
+  float: left;
+  width: 50%;
+  height: 36px;
+  padding: 0;
+  line-height: 36px;
+  color: #fff;
+  font-weight: bold;
+  box-sizing: border-box;
+}
+.inner:before {
+  content: "YES";
+  padding-left: 10px;
+  background-color: #060;
+  color: #fff;
+}
+.inner:after {
+  content: "NO";
+  padding-right: 10px;
+  background-color: #bbb;
+  color: #fff;
+  text-align: right;
+}
+.switch {
+  display: block;
+  width: 24px;
+  margin: 5px;
+  background: #fff;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 40px;
+  border: 0 solid #bbb;
+  border-radius: 20px;
+  transition: all 0.2s 0s;
+}
+.checkbox:checked + .label .inner {
+  margin-left: 0;
+}
+.checkbox:checked + .label .switch {
+  right: 0px;
 }
