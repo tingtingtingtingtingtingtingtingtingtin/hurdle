@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import Input from "./components/Input";
 import List from "./components/List";
 import Alert from "./components/Alert";
+import wordBank from "./data/wordbank";
 
 function App() {
   const [guesses, setGuesses] = useState([]);
@@ -62,14 +63,19 @@ function App() {
             return "incorrect";
           });
 
-      setGuesses([...guesses, { guess: currentGuess, result: feedback }]);
       if (all_green) {
         showAlert("You hit the hurdle!");
         setTimeout(() => setGameState("guessed"), 100);
-      } else {
-        setCurrentGuess("");
+        setGuesses([...guesses, { guess: currentGuess, result: feedback }]);
+        return;
       }
-      console.log(guesses);
+      if (!wordBank.has(currentGuess.toLowerCase())) {
+        // console.log(currentGuess);
+        showAlert("Not a valid word!");
+      } else {
+        setGuesses([...guesses, { guess: currentGuess, result: feedback }]);
+        setCurrentGuess('');
+      }
     } catch {
       throw new Error("Guess API error");
     }
