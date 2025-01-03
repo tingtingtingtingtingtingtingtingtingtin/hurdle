@@ -10,7 +10,7 @@ The goal of Hurdle is to come up with as many valid words as possible that **do 
 Hurdle leverages modern web development tools for optimal performance and scalability:
 
 - **Frontend**: Built using **React** with **Vite** for fast builds and development.
-   - Plain CSS
+   - Styled using plain CSS
 - **Backend**: A lightweight **Express.js** server handles API requests.
 - **Wordle API**: Word data is fetched from this open-source Wordle API: [Wordle API](https://github.com/petergeorgas/Wordle-API/commit/4cd62c67c781713c01ae1e1bd3e82eb2bf1ecfdb).
 
@@ -37,7 +37,11 @@ Hurdle leverages modern web development tools for optimal performance and scalab
    npm run server
    npm run dev
    ```
-4. `Ctrl+Click` to open the link provided
+   or
+   ```bash
+   npm start
+   ```
+5. `Ctrl+Click` to open the link provided
 
 ## Future Plans
 - I plan to deploy the backend on a dedicated server so it can be ran not just locally
