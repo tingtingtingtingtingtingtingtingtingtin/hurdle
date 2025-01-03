@@ -2,7 +2,7 @@
   "rewrites": [
     {
       "source": "/api/wordle",
-      "destination": "https://wordle-api.vercel.app/wordle"
+      "destination": "https://wordle-api.vercel.app/api/wordle"
     }
   ]
 }
