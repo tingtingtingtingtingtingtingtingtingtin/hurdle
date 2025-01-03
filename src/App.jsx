@@ -47,6 +47,8 @@ function App() {
     };
   }, [gameState]);
 
+  const API_URL = process.env.NODE_ENV === "production" ? "/api/wordle" : "http://localhost:3000/api/wordle";
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (currentGuess.length < 5) {
@@ -58,7 +60,7 @@ function App() {
     }
 
     try {
-      const response = await fetch('https://wordle-api.vercel.app/api/wordle', {
+      const response = await fetch(API_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ guess: currentGuess }),
@@ -94,6 +96,7 @@ function App() {
       showAlert("Guess API error");
     }
   };
+
 
   return (
     <div className="game">

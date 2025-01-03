@@ -25,15 +25,15 @@ const Settings = ({ onClose }) => {
           <div className="label-text">Use expanded word list (recommended)</div>
           <ToggleSwitch
             label="expanded-list"
-            onClick={(prev) => ({...prev, useExpanded: !prev.useExpanded})}
+            onClick={(prev) => ({ ...prev, useExpanded: !prev.useExpanded })}
             defaultChecked={true}
           />
         </div>
-				<div className="settings-item">
+        <div className="settings-item">
           <div className="label-text">Hard Mode (for testing purposes)</div>
           <ToggleSwitch
             label="hard-mode"
-            onClick={(prev) => ({...prev, hardMode: !prev.hardMode})}
+            onClick={(prev) => ({ ...prev, hardMode: !prev.hardMode })}
             defaultChecked={false}
           />
         </div>
