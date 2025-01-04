@@ -14,7 +14,10 @@ function App() {
   const [gameState, setGameState] = useState("wait");
   const [alertMessage, setAlertMessage] = useState("");
   const [inputInvalid, setInputInvalid] = useState(false);
-  const [settings, setSettings] = useState({ useExpanded: true, hardMode: false });
+  const [settings, setSettings] = useState({
+    useExpanded: true,
+    hardMode: false,
+  });
 
   const showAlert = (message) => {
     setAlertMessage(message);
@@ -47,7 +50,10 @@ function App() {
     };
   }, [gameState]);
 
-  const API_URL = process.env.NODE_ENV === "production" ? "/api/wordle" : "http://localhost:3000/api/wordle";
+  const API_URL =
+    process.env.NODE_ENV === "production"
+      ? "/api/wordle"
+      : "http://localhost:3000/api/wordle";
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -96,7 +102,6 @@ function App() {
       showAlert("Guess API error");
     }
   };
-
 
   return (
     <div className="game">
