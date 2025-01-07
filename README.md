@@ -1,4 +1,4 @@
-# Hurdle
+# Hurdle (in-progress)
 
 Welcome to **Hurdle**, the Wordle clone where you _don't_ want to guess the word!
 
