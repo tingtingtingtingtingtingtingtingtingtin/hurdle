@@ -26,7 +26,7 @@ const Settings = ({ onClose }) => {
           <ToggleSwitch
             label="expanded-list"
             onClick={(prev) => ({ ...prev, useExpanded: !prev.useExpanded })}
-            defaultChecked={true}
+            defaultChecked={settings.useExpanded}
           />
         </div>
         <div className="settings-item">
@@ -34,7 +34,7 @@ const Settings = ({ onClose }) => {
           <ToggleSwitch
             label="hard-mode"
             onClick={(prev) => ({ ...prev, hardMode: !prev.hardMode })}
-            defaultChecked={false}
+            defaultChecked={settings.hardMode}
           />
         </div>
       </div>

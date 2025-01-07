@@ -15,7 +15,6 @@ const Header = () => {
       </div>
       <button className="settings-btn" onClick={toggleShowSettings}>
         <i className="fas fa-cog"></i>{" "}
-        {/* You can use Font Awesome for the cog icon */}
       </button>
 
       {showSettings && <Settings onClose={toggleShowSettings} />}

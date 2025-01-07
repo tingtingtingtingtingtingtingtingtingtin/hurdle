@@ -18,7 +18,7 @@ function App() {
   const [inputInvalid, setInputInvalid] = useState(false);
   const [settings, setSettings] = useState({
     useExpanded: true,
-    hardMode: false,
+    hardMode: true,
   });
 
   const showAlert = (message) => {
@@ -66,18 +66,19 @@ function App() {
       showAlert("Word already guessed!");
       return;
     }
-
-    for (let idx = 0; idx < 5; idx++) {
-      const letter = currentGuess[idx];
-      if (greens[idx] !== "" && letter !== greens[idx]) {
-        showAlert("Must use all hints!");
-        return;
+    if (settings.hardMode) {
+      for (let idx = 0; idx < 5; idx++) {
+        const letter = currentGuess[idx];
+        if (greens[idx] !== "" && letter !== greens[idx]) {
+          showAlert("Must use all hints!");
+          return;
+        }
       }
-    }
-    for (const yellow of yellows) {
-      if (!currentGuess.includes(yellow)) {
-        showAlert("Must use all yellow hints!");
-        return;
+      for (const yellow of yellows) {
+        if (!currentGuess.includes(yellow)) {
+          showAlert("Must use all yellow hints!");
+          return;
+        }
       }
     }
     try {
