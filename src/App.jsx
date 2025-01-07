@@ -11,6 +11,8 @@ export const SettingContext = createContext(null);
 function App() {
   const [guesses, setGuesses] = useState([]);
   const [currentGuess, setCurrentGuess] = useState("");
+  const [greens, setGreens] = useState(["", "", "", "", ""]);
+  const [yellows, setYellows] = useState(new Set());
   const [gameState, setGameState] = useState("wait");
   const [alertMessage, setAlertMessage] = useState("");
   const [inputInvalid, setInputInvalid] = useState(false);
@@ -65,6 +67,19 @@ function App() {
       return;
     }
 
+    for (let idx = 0; idx < 5; idx++) {
+      const letter = currentGuess[idx];
+      if (greens[idx] !== "" && letter !== greens[idx]) {
+        showAlert("Must use all hints!");
+        return;
+      }
+    }
+    for (const yellow of yellows) {
+      if (!currentGuess.includes(yellow)) {
+        showAlert("Must use all yellow hints!");
+        return;
+      }
+    }
     try {
       const response = await fetch(API_URL, {
         method: "POST",
@@ -78,11 +93,21 @@ function App() {
       const all_green = data.was_correct;
       const feedback = all_green
         ? ["correct", "correct", "correct", "correct", "correct"]
-        : data.character_info.map((info) => {
-            if (info.scoring.correct_idx) return "correct";
-            if (info.scoring.in_word) return "partial";
-            return "incorrect";
-          });
+        : data.character_info.map((info, idx) => {
+        if (info.scoring.correct_idx) {
+          const newGreens = greens.slice();
+          newGreens[idx] = info.char.toUpperCase();
+          setGreens(newGreens);
+          return "correct";
+        }
+        if (info.scoring.in_word) {
+          const newYellows = new Set(yellows);
+          newYellows.add(info.char.toUpperCase());
+          setYellows(newYellows);
+          return "partial";
+        }
+        return "incorrect";
+        });
 
       if (all_green) {
         setTimeout(() => setGameState("guessed"), 100);
