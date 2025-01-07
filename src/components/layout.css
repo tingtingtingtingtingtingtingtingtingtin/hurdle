@@ -307,6 +307,7 @@ html {
 .switch {
   display: block;
   width: 24px;
+  height: 26px;
   margin: 5px;
   background: #fff;
   position: absolute;

@@ -4,13 +4,12 @@ import { SettingContext } from "../App";
 
 const Settings = ({ onClose }) => {
   const { settings, setSettings } = useContext(SettingContext);
-
-  const toggleExpanded = () => {
+  const handleToggle = (id) => {
     setSettings((prev) => ({
-      ...prev,
-      useExpanded: !prev.useExpanded,
-    }));
-  };
+        ...prev,
+        [id]: { ...prev[id], value: !prev[id].value },
+      }));
+  }
 
   return (
     <div className="settings-screen">
@@ -21,22 +20,18 @@ const Settings = ({ onClose }) => {
             X
           </button>
         </span>
-        <div className="settings-item">
-          <div className="label-text">Use expanded word list (recommended)</div>
-          <ToggleSwitch
-            label="expanded-list"
-            onClick={(prev) => ({ ...prev, useExpanded: !prev.useExpanded })}
-            defaultChecked={settings.useExpanded}
-          />
-        </div>
-        <div className="settings-item">
-          <div className="label-text">Hard Mode (for testing purposes)</div>
-          <ToggleSwitch
-            label="hard-mode"
-            onClick={(prev) => ({ ...prev, hardMode: !prev.hardMode })}
-            defaultChecked={settings.hardMode}
-          />
-        </div>
+        {
+          Object.entries(settings).map(([id, setting]) => (
+              <div key={id} className="settings-item">
+                <div className="label-text">{setting.label}</div>
+                <ToggleSwitch
+                  label={id}
+                  onClick={() => handleToggle(id)}
+                  defaultChecked={setting.value}
+                />
+              </div>
+            ))
+        }
       </div>
     </div>
   );

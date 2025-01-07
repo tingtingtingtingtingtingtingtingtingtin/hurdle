@@ -17,8 +17,8 @@ function App() {
   const [alertMessage, setAlertMessage] = useState("");
   const [inputInvalid, setInputInvalid] = useState(false);
   const [settings, setSettings] = useState({
-    useExpanded: true,
-    hardMode: true,
+    useExpanded: { label: "Use expanded word list (recommended)", value: true },
+    hardMode: { label: "Use hard mode (recommended, for testing purposes)", value: true },
   });
 
   const showAlert = (message) => {
@@ -66,7 +66,7 @@ function App() {
       showAlert("Word already guessed!");
       return;
     }
-    if (settings.hardMode) {
+    if (settings.hardMode.value === true) {
       for (let idx = 0; idx < 5; idx++) {
         const letter = currentGuess[idx];
         if (greens[idx] !== "" && letter !== greens[idx]) {
@@ -114,7 +114,7 @@ function App() {
         setTimeout(() => setGameState("guessed"), 100);
       } else if (
         !wordBank.has(currentGuess.toLowerCase()) &&
-        (!settings.useExpanded ||
+        (settings.useExpanded.value === false ||
           !expandedWordBank.has(currentGuess.toLowerCase()))
       ) {
         showAlert("Not a valid word!");

@@ -1,4 +1,4 @@
-const ToggleSwitch = ({ label, onClick, defaultChecked = false }) => {
+const ToggleSwitch = ({ label, onClick, defaultChecked }) => {
   return (
     <div className="container">
       <div className="toggle-switch">
