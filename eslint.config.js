@@ -12,6 +12,8 @@ export default [
       ecmaVersion: 2020,
       globals: {
         ...globals.node,
+        window: "readonly",
+        document: "readonly",
       },
       parserOptions: {
         ecmaVersion: "latest",
@@ -35,6 +37,7 @@ export default [
         "warn",
         { allowConstantExport: true },
       ],
+      "react/prop-types": "off",
     },
   },
 ];

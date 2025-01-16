@@ -1,5 +1,3 @@
-import React from "react";
-
 const Result = ({ guess, result }) => {
   const getColorForLetter = (result) => {
     if (result === "correct") return "#538d4e";
