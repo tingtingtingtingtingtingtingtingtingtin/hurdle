@@ -1,3 +1,5 @@
+const { expect, test } = require("@jest/globals");
+
 expect.extend({
   toBe(received, argument) {
     return {
