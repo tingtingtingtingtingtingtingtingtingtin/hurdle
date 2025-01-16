@@ -48,8 +48,8 @@ const Input = ({
             color: `${gameState === "guessed" ? "#538d4e" : ""} ${
               inputInvalid ? "#721c24" : ""
             }`,
-            borderColor: `${gameState === "guessed" ? "#538d4e" : ""} ${inputInvalid ? "#721c24" : ""}`, // Default border if valid
-            transition: "all 0.3s ease", // Smooth transition for the border color
+            borderColor: `${gameState === "guessed" ? "#538d4e" : ""} ${inputInvalid ? "#721c24" : ""}`,
+            transition: "all 0.3s ease",
           }}
         >
           {currentGuess[index] || ""}
