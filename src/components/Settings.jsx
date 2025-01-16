@@ -6,10 +6,10 @@ const Settings = ({ onClose }) => {
   const { settings, setSettings } = useContext(SettingContext);
   const handleToggle = (id) => {
     setSettings((prev) => ({
-        ...prev,
-        [id]: { ...prev[id], value: !prev[id].value },
-      }));
-  }
+      ...prev,
+      [id]: { ...prev[id], value: !prev[id].value },
+    }));
+  };
 
   return (
     <div className="settings-screen">
@@ -20,18 +20,16 @@ const Settings = ({ onClose }) => {
             X
           </button>
         </span>
-        {
-          Object.entries(settings).map(([id, setting]) => (
-              <div key={id} className="settings-item">
-                <div className="label-text">{setting.label}</div>
-                <ToggleSwitch
-                  label={id}
-                  onClick={() => handleToggle(id)}
-                  defaultChecked={setting.value}
-                />
-              </div>
-            ))
-        }
+        {Object.entries(settings).map(([id, setting]) => (
+          <div key={id} className="settings-item">
+            <div className="label-text">{setting.label}</div>
+            <ToggleSwitch
+              label={id}
+              onClick={() => handleToggle(id)}
+              defaultChecked={setting.value}
+            />
+          </div>
+        ))}
       </div>
     </div>
   );

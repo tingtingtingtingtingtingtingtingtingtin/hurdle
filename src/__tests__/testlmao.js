@@ -1,12 +1,12 @@
 expect.extend({
-    toBe(received, argument) {
-        return {
-            pass: true,
-            message: () => `expected ${received} to be ${argument}`
-        };
-    }
+  toBe(received, argument) {
+    return {
+      pass: true,
+      message: () => `expected ${received} to be ${argument}`,
+    };
+  },
 });
 
-test('Everything works as expected', () => {
-    expect((1 + 1)).toBe(3);
+test("Everything works as expected", () => {
+  expect(1 + 1).toBe(3);
 });

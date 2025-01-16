@@ -18,7 +18,10 @@ function App() {
   const [inputInvalid, setInputInvalid] = useState(false);
   const [settings, setSettings] = useState({
     useExpanded: { label: "Use expanded word list (recommended)", value: true },
-    hardMode: { label: "Use hard mode (recommended, for testing purposes)", value: true },
+    hardMode: {
+      label: "Use hard mode (recommended, for testing purposes)",
+      value: true,
+    },
   });
 
   const showAlert = (message) => {
@@ -90,25 +93,23 @@ function App() {
 
       const data = await response.json();
       console.log("API Response:", data);
-
+      // hints
+      const newGreens = greens.slice();
+      const newYellows = new Set(yellows);
       const all_green = data.was_correct;
       const feedback = all_green
         ? ["correct", "correct", "correct", "correct", "correct"]
         : data.character_info.map((info, idx) => {
-        if (info.scoring.correct_idx) {
-          const newGreens = greens.slice();
-          newGreens[idx] = info.char.toUpperCase();
-          setGreens(newGreens);
-          return "correct";
-        }
-        if (info.scoring.in_word) {
-          const newYellows = new Set(yellows);
-          newYellows.add(info.char.toUpperCase());
-          setYellows(newYellows);
-          return "partial";
-        }
-        return "incorrect";
-        });
+            if (info.scoring.correct_idx) {
+              newGreens[idx] = info.char.toUpperCase();
+              return "correct";
+            }
+            if (info.scoring.in_word) {
+              newYellows.add(info.char.toUpperCase());
+              return "partial";
+            }
+            return "incorrect";
+          });
 
       if (all_green) {
         setTimeout(() => setGameState("guessed"), 100);
@@ -120,6 +121,8 @@ function App() {
         showAlert("Not a valid word!");
         return;
       } else {
+        setGreens(newGreens);
+        setYellows(newYellows);
         setCurrentGuess("");
       }
       setGuesses([...guesses, { guess: currentGuess, result: feedback }]);
