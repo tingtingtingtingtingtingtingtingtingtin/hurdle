@@ -1,6 +1,6 @@
-import React, { useContext } from "react";
+import { useContext } from "react";
 import ToggleSwitch from "./ToggleSwitch";
-import { SettingContext } from "../App";
+import SettingContext from "./SettingContext";
 
 const Settings = ({ onClose }) => {
   const { settings, setSettings } = useContext(SettingContext);

@@ -1,12 +1,11 @@
-import { useState, useEffect, useContext, createContext } from "react";
+import { useState, useEffect } from "react";
 import Header from "./components/Header";
 import Input from "./components/Input";
 import List from "./components/List";
 import Alert from "./components/Alert";
 import wordBank from "./data/wordbank";
 import expandedWordBank from "./data/expanded";
-
-export const SettingContext = createContext(null);
+import SettingContext from "./components/SettingContext";
 
 function App() {
   const [guesses, setGuesses] = useState([]);
