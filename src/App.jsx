@@ -22,6 +22,7 @@ function App() {
       label: "Use hard mode (recommended, for testing purposes)",
       value: true,
     },
+    useTimer: { label: "Use timer", value: true },
   });
 
   const showAlert = (message) => {
@@ -35,6 +36,9 @@ function App() {
   const hideAlert = () => setAlertMessage("");
 
   useEffect(() => {
+    if (settings.useTimer.value === false) {
+      return;
+    }
     let timer;
     if (gameState === "play" && timeLeft > 0) {
       timer = setTimeout(() => {
@@ -45,7 +49,7 @@ function App() {
       setGameState("timeout");
     }
     return () => clearInterval(timer);
-  }, [gameState, timeLeft]);
+  }, [gameState, timeLeft, settings.useTimer.value]);
 
   useEffect(() => {
     const handleStart = (e) => {
@@ -151,7 +155,7 @@ function App() {
       <SettingContext.Provider value={{ settings, setSettings }}>
         <Header />
       </SettingContext.Provider>
-      <h3 style={{ margin: "-1rem 0"}}>Time Left: {timeLeft}</h3>
+      <h3 style={{ margin: "-1rem 0"}}> {settings.useTimer.value && `Time Left: ${timeLeft}`}</h3>
       {gameState !== "wait" ? (
         <h3>
           {gameState === "guessed" ? `You hit the hurdle! Your` : gameState === "timeout" ? 'You ran out of time! Your' : `Current`}{" "}
