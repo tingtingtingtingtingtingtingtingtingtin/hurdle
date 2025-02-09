@@ -15,12 +15,14 @@ function App() {
   const [gameState, setGameState] = useState("wait");
   const [alertMessage, setAlertMessage] = useState("");
   const [inputInvalid, setInputInvalid] = useState(false);
+  const [timeLeft, setTimeLeft] = useState(30);
   const [settings, setSettings] = useState({
     useExpanded: { label: "Use expanded word list (recommended)", value: true },
     hardMode: {
       label: "Use hard mode (recommended, for testing purposes)",
       value: true,
     },
+    useTimer: { label: "Use timer", value: true },
   });
 
   const showAlert = (message) => {
@@ -34,14 +36,31 @@ function App() {
   const hideAlert = () => setAlertMessage("");
 
   useEffect(() => {
+    if (settings.useTimer.value === false) {
+      return;
+    }
+    let timer;
+    if (gameState === "play" && timeLeft > 0) {
+      timer = setTimeout(() => {
+        setTimeLeft((prev) => prev - 1);
+      }, 1000);
+    } else if (timeLeft === 0) {
+      clearInterval(timer);
+      setGameState("timeout");
+    }
+    return () => clearInterval(timer);
+  }, [gameState, timeLeft, settings.useTimer.value]);
+
+  useEffect(() => {
     const handleStart = (e) => {
       if (gameState === "play") {
         return;
       }
       if (e.key.length === 1 && /^[a-zA-Z]$/.test(e.key)) {
-        if (gameState === "guessed") {
+        if (gameState === "guessed" || gameState === "timeout") {
           setGuesses([]);
           setCurrentGuess("");
+          setTimeLeft(30);
         }
         setGameState("play");
         setCurrentGuess(e.key.toUpperCase());
@@ -136,9 +155,10 @@ function App() {
       <SettingContext.Provider value={{ settings, setSettings }}>
         <Header />
       </SettingContext.Provider>
+      <h3 style={{ margin: "-1rem 0"}}> {settings.useTimer.value && `Time Left: ${timeLeft}`}</h3>
       {gameState !== "wait" ? (
         <h3>
-          {gameState === "guessed" ? `You hit the hurdle! Your` : `Current`}{" "}
+          {gameState === "guessed" ? `You hit the hurdle! Your` : gameState === "timeout" ? 'You ran out of time! Your' : `Current`}{" "}
           Score: {guesses.length}
         </h3>
       ) : (
