@@ -7,6 +7,8 @@ import wordBank from "./data/wordbank";
 import expandedWordBank from "./data/expanded";
 import SettingContext from "./components/SettingContext";
 
+const DEFAULT_TIME = 20;
+
 function App() {
   const [guesses, setGuesses] = useState([]);
   const [currentGuess, setCurrentGuess] = useState("");
@@ -15,7 +17,7 @@ function App() {
   const [gameState, setGameState] = useState("wait");
   const [alertMessage, setAlertMessage] = useState("");
   const [inputInvalid, setInputInvalid] = useState(false);
-  const [timeLeft, setTimeLeft] = useState(30);
+  const [timeLeft, setTimeLeft] = useState(DEFAULT_TIME);
   const [settings, setSettings] = useState({
     useExpanded: { label: "Use expanded word list (recommended)", value: true },
     hardMode: {
@@ -34,6 +36,10 @@ function App() {
     }, 500);
   };
   const hideAlert = () => setAlertMessage("");
+  const resetHints = () => {
+    setGreens(["", "", "", "", ""]);
+    setYellows(new Set());
+  };
 
   useEffect(() => {
     if (settings.useTimer.value === false) {
@@ -60,7 +66,8 @@ function App() {
         if (gameState === "guessed" || gameState === "timeout") {
           setGuesses([]);
           setCurrentGuess("");
-          setTimeLeft(30);
+          setTimeLeft(DEFAULT_TIME);
+          resetHints();
         }
         setGameState("play");
         setCurrentGuess(e.key.toUpperCase());
@@ -139,6 +146,7 @@ function App() {
         showAlert("Not a valid word!");
         return;
       } else {
+        setTimeLeft(timeLeft + 2);
         setGreens(newGreens);
         setYellows(newYellows);
         setCurrentGuess("");
@@ -155,10 +163,17 @@ function App() {
       <SettingContext.Provider value={{ settings, setSettings }}>
         <Header />
       </SettingContext.Provider>
-      <h3 style={{ margin: "-1rem 0"}}> {settings.useTimer.value && `Time Left: ${timeLeft}`}</h3>
+      <h3 style={{ margin: "-1rem 0" }}>
+        {" "}
+        {settings.useTimer.value && `Time Left: ${timeLeft}`}
+      </h3>
       {gameState !== "wait" ? (
         <h3>
-          {gameState === "guessed" ? `You hit the hurdle! Your` : gameState === "timeout" ? 'You ran out of time! Your' : `Current`}{" "}
+          {gameState === "guessed"
+            ? `You hit the hurdle! Your`
+            : gameState === "timeout"
+              ? "You ran out of time! Your"
+              : `Current`}{" "}
           Score: {guesses.length}
         </h3>
       ) : (
