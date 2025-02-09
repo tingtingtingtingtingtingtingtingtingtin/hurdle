@@ -40,8 +40,4 @@ Hurdle leverages modern web development tools for optimal performance and scalab
    ```bash
    npm start
    ```
-4. `Ctrl+Click` to open the link provided
-
-## Future Plans
-
-- I plan to deploy the backend on a dedicated server so it can be ran not just locally
+4. `Ctrl+Click` to open the link provided or copy-paste it into a new tab
